@@ -15,58 +15,15 @@ class InputError(Exception):
         self.msg = msg
 
 # Returns None if an error occurred, True for 'Y' and False for 'N'  
-def ProcessYesNo_Input(default):
-
-    strvar = sys.stdin.readline(100)
-    if not strvar:
-        raise InputError("Empty Input String")
-
-    strvar = strvar.replace('\r\n', '\n') #sanitize newlines for Python 3.2 and older
-    if (strvar[0] == '\n'):
-        if (default == -1):
-            raise InputError("Empty Input String")
-        return default
-
-    if (strvar[0] == 'N' or strvar[0] == 'n'):
-        return False
-
-    if (strvar[0] == 'Y' or strvar[0] == 'y'):
-        return True
-
-    raise InputError("Invalid Input")
+def ProcessYesNo_Input(default): #N
+    return False
 
 def DisplayError(e):
     sys.stderr.write("Desc: " + e.details + "\n")
 
 def SetSerialNumber(ph):
-    print("\nFor all questions, enter the value, or press ENTER to select the [Default]")
-
-    print("\n--------------------------------------")
-    print("\n  | Some Phidgets have a unique serial number, printed on a white label on the device.\n"
-      "  | For Phidgets and other devices plugged into a VINT Port, use the serial number of the VINT Hub.\n"
-      "  | Specify the serial number to ensure you are only opening channels from that specific device.\n"
-      "  | Otherwise, use -1 to open a channel on any device.")
-    while (True):
-        print("\nWhat is the Serial Number? [-1] ")
-        strvar = sys.stdin.readline(100)
-        if not strvar:
-            continue
-
-        strvar = strvar.replace('\r\n', '\n') #sanitize newlines for Python 3.2 and older
-        if (strvar[0] == '\n'):
-            deviceSerialNumber = -1
-            break
-
-        try:
-            deviceSerialNumber = int(strvar)
-        except ValueError as e:
-            continue
-
-        if (deviceSerialNumber >= -1 and deviceSerialNumber != 0):
-            break
-
     try:
-        ph.setDeviceSerialNumber(deviceSerialNumber)
+        ph.setDeviceSerialNumber(261542)
     except PhidgetException as e:
         sys.stderr.write("Runtime Error -> Setting DeviceSerialNumber: \n\t")
         DisplayError(e)
@@ -195,37 +152,8 @@ def SetChannel(ph):
     if (isHubPortDevice):
         return
 
-    print("\n--------------------------------------")
-    print("\n  | Devices with multiple inputs or outputs of the same type will map them to channels.\n"
-      "  | The API tab for the device on www.phidgets.com shows the channel breakdown.\n"
-      "  | For example, a device with 4 DigitalInputs would use channels [0 - 3]\n"
-      "  | A device with 1 VoltageInput would use channel 0")
-    while (True):
-        print("\nWhat channel# of the device do you want to open? [0] ")
-        strvar = sys.stdin.readline(100)
-        if not strvar:
-            continue
-
-        strvar = strvar.replace('\r\n', '\n') #sanitize newlines for Python 3.2 and older
-        if (strvar[0] == '\n'):
-            Channel = 0
-            break
-
-        try:
-            Channel = int(strvar)
-        except ValueError as e:
-            continue
-
-        if (Channel >= 0):
-            break
-
-    try:
-        ph.setChannel(Channel)
-    except PhidgetException as e:
-        sys.stderr.write("Runtime Error -> Setting Channel: \n\t")
-        DisplayError(e)
-        raise
-
+    print("using Channel 0")
+    ph.setChannel(0)
     return
 
 def EnableServerDiscovery():
