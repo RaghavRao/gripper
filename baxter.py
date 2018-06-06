@@ -9,6 +9,8 @@ from Phidget22.Phidget import *
 from Phidget22.Net import *
 from std_msgs.msg import String
 
+MAX_VOLTAGE = 0.12
+print "Using MAX_VOLTAGE", MAX_VOLTAGE
 def DisplayError(e):
     sys.stderr.write("Desc: " + e.details + "\n")
 
@@ -234,10 +236,12 @@ def SetAttachDetachError_Handlers(ph):
 
 def talker(voltage, publisher):
     global volts
-    volts =  str(voltage)
-    hello_str = volts
-#    rospy.loginfo(hello_str)
-    publisher.publish(hello_str)
+    voltage = float(voltage)
+    if voltage > MAX_VOLTAGE:
+        voltage = MAX_VOLTAGE
+    perc = (float(voltage)/float(MAX_VOLTAGE))*100
+    volts =  str(perc)
+    publisher.publish(volts)
 
 """
 * Outputs the VoltageInput's most recently reported voltage.
