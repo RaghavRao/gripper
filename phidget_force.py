@@ -394,7 +394,7 @@ def main():
         OpenPhidgetChannel_waitForAttach(ch, 5000)
         
         print("Sampling data for 10 seconds...")
-        pub = rospy.Publisher('/baxter/phidget/voltage', String, queue_size=10)
+        pub = rospy.Publisher('GripperForceSensor', String, queue_size=10)
         rospy.init_node('talker', anonymous=True)
         rate = rospy.Rate(10)
         while not rospy.is_shutdown():
