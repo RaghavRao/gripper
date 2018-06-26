@@ -6,8 +6,8 @@ Used on a Baxter Research Robot to recieve haptic feedback from the gripper
 
 1. Only one Phidget device is connected to the computer
 2. Input is an analogue voltage input
-3. Phidget driver for your OS is installed
-4. Ros kinetic and ROSpy are installed
+3. Phidget driver for your [OS](https://www.phidgets.com/docs/Software_Overview#Operating_System_Support) is installed
+4. [Ros kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu) and [ROSpy](http://wiki.ros.org/rospy) are installed
 
 ## Usage:
 
