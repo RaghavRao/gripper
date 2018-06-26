@@ -9,7 +9,7 @@ from Phidget22.Phidget import *
 from Phidget22.Net import *
 from std_msgs.msg import String
 
-MAX_VOLTAGE = 2 #If the sensor is moved, Update with a sensible value for the Maximum expected voltage
+MAX_VOLTAGE = 4.5 #If the sensor is moved, Update with a sensible value for the Maximum expected voltage
 print "Using MAX_VOLTAGE", MAX_VOLTAGE
 def DisplayError(e):
     sys.stderr.write("Desc: " + e.details + "\n")
@@ -235,12 +235,11 @@ def SetAttachDetachError_Handlers(ph):
 
 def talker(voltage, publisher):
     global volts
-    voltage = float(voltage)
-    if voltage > MAX_VOLTAGE:
-        voltage = MAX_VOLTAGE
-    perc = (float(voltage)/float(MAX_VOLTAGE))*100
-    volts =  str(perc)
-    publisher.publish(volts)
+    volt = float(voltage)
+    if volt > MAX_VOLTAGE:
+        volt = MAX_VOLTAGE
+    perc = str(100*(volt/MAX_VOLTAGE))
+    publisher.publish(voltage)
 
 """
 * Outputs the VoltageInput's most recently reported voltage.
@@ -393,7 +392,7 @@ def main():
         OpenPhidgetChannel_waitForAttach(ch, 5000)
         
         print("Sampling data for 10 seconds...")
-        pub = rospy.Publisher('GripperForceSensor', String, queue_size=10)
+        pub = rospy.Publisher('GripperForceSensor', String, queue_size=1)
         rospy.init_node('talker', anonymous=True)
         rate = rospy.Rate(10)
         while not rospy.is_shutdown():
