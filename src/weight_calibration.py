@@ -33,20 +33,18 @@ def listener():
         values = []
         s = '>'
         sys.stdout.write( 'Gathering values' )
-        for i in xrange(2):
+        for i in xrange(1):
             sys.stdout.write(s)
             sys.stdout.flush()
             values.append(val)
             time.sleep(0.1)
         print "\n"
         y.append(sum(values)/len(values))
-    font = {'family' : 'normal',
-        'weight' : 'bold',
-        'size'   : 22}
+    font = {'size'   : 20}
     matplotlib.rc('font', **font)
-    plt.title('Force vs Voltage', fontsize=22)
-    plt.ylabel('Voltage/V', fontsize=16, linespacing=2)
-    plt.xlabel('Force/N', fontsize=16, linespacing=2)
+    plt.title('Force vs Voltage', fontsize=22, weight='bold')
+    plt.ylabel('Voltage/V\n', fontsize=20, linespacing=3, weight='bold')
+    plt.xlabel('\nForce/N', fontsize=20, linespacing=3, weight='bold')
     plt.rc('xtick',labelsize=18)
     plt.rc('ytick',labelsize=18)
     plt.plot(x,y)
